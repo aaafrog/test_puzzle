@@ -12,9 +12,11 @@ GameObject:
   - component: {fileID: 2612136937294936329}
   - component: {fileID: 8048255468219509156}
   - component: {fileID: 5859497601789888852}
+  - component: {fileID: 1654611741365802805}
+  - component: {fileID: 3615423470408250622}
   m_Layer: 5
   m_Name: Yellow
-  m_TagString: Yellow
+  m_TagString: Block
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -101,3 +103,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1654611741365802805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358356872063905176}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58133f11e278c99418dc9800249f6aaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3615423470408250622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4358356872063905176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85557501604986e44ac0c857a9c9e2be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Color: 1
+  block_pox_x: 0
+  block_pox_y: 0
+  pos_Chack: 0

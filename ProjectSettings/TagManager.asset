@@ -9,7 +9,10 @@ TagManager:
   - Blue
   - Yellow
   - Red
-  - Wall
+  - DownObject
+  - WallLeft
+  - WallRight
+  - Block
   layers:
   - Default
   - TransparentFX
@@ -19,7 +22,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - DownObject
   - 
   - 
   - 
