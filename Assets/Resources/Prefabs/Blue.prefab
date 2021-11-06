@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5898276363716394857}
   - component: {fileID: 2850262971470102032}
   - component: {fileID: 4334794236310283839}
-  - component: {fileID: 2496602349777352530}
   - component: {fileID: 5419465149285575006}
   m_Layer: 5
   m_Name: Blue
@@ -63,6 +62,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0.12823725, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -101,20 +101,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 90, y: 90}
   m_EdgeRadius: 0
---- !u!114 &2496602349777352530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3046641539505253910}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58133f11e278c99418dc9800249f6aaa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5419465149285575006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,6 +116,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Color: 4
-  block_pox_x: 0
-  block_pox_y: 0
-  pos_Chack: 0
+  block_pos_x: 0
+  block_pos_y: 0

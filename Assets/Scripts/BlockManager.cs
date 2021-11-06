@@ -17,22 +17,22 @@ public class BlockManager : MonoBehaviour
 	};
 	public COLOR_TYPE Color;
 
-	public float block_pox_x;
-	public float block_pox_y;
+	public float block_pos_x;
+	public float block_pos_y;
 
-	public bool pos_Chack = false;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-        block_pox_x = this.transform.position.x;
-        block_pox_y = this.transform.position.y;
-    }
+		block_pos_x = Mathf.RoundToInt(this.transform.position.x * 10.0f) / 10.0f;
+		block_pos_y = Mathf.RoundToInt(this.transform.position.y * 10.0f) / 10.0f;
+	}
 
 	// Update is called once per frame
 	void Update()
 	{
-
+		block_pos_x = Mathf.RoundToInt(this.transform.position.x * 10.0f) / 10.0f;
+		block_pos_y = Mathf.RoundToInt(this.transform.position.y * 10.0f) / 10.0f;
 
 	}
 

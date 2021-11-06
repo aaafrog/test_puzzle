@@ -4,54 +4,39 @@ using UnityEngine;
 
 public class CreateManager : MonoBehaviour
 {
-
-   
-
-    public GameObject[] blockPrefabArray; // オブジェクトを格納する配列変数
-    public bool create_DownObject_Flag = false; // DownObjectが作成されているか
-
+    // 他スクリプト格納用
+    private GameObject controlManager;
+    private GameObject coordinateCalculationManager;
 
     private GameObject objectCanvas; // Canvasオブジェクト格納用
     private GameObject objectDownObject; // Blockをまとめ、コントロール可能にする親オブジェクト格納用
 
     private bool set_Flag = false; // BlockがDownObjectにセットされているか
-    //private bool DownObject_Flag = false;
 
+
+
+    public GameObject[] blockPrefabArray; // Inspector上で紐付けたオブジェクトを格納している配列変数
+    public bool create_DownObject_Flag = false; // DownObjectが作成されているか
+
+    public bool cpl_Create = false;// 作成完了フラグ
 
 
     // Start is called before the first frame update
     void Start()
     {
-
-
         objectCanvas = GameObject.Find("Canvas");
-        Create_Blocks();
+        controlManager = GameObject.Find("ControlManager");
+        coordinateCalculationManager = GameObject.Find("CoordinateCalculationManager");
 
-        //objectDownObject = GameObject.Find("DownObject(Clone)");
-        //Instantiate(blockPrefabArray[0], pos, rot, objectCanvas.transform); // オブジェクトを生成
+        Create_Blocks();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
-        //Debug.Log(objectDownObject);
-
-        if (create_DownObject_Flag == true)
-        {
-            if (objectDownObject == null)
-            {
-                create_DownObject_Flag = false;
-            }
-        }
-        
-        Create_Blocks();
-
-    }
 
     // Block生成S
-    void Create_Blocks()
+    public void Create_Blocks()
     {
+
         Vector3 pos = transform.position;
         Vector3 pos2 = transform.position;
 
@@ -66,35 +51,62 @@ public class CreateManager : MonoBehaviour
         Quaternion rot = Quaternion.Euler(0, 0, 0); // 角度のQuaternion化
 
 
+        //Debug.Log("create_DownObject_Flag : " + create_DownObject_Flag);
         if (create_DownObject_Flag == false)
         {
             //DownObject_Flag = true;
+            coordinateCalculationManager.GetComponent<CoordinateCalculationManager>().Clear_Block_Pos(); // 設置済みブロックの位置をクリア
+            coordinateCalculationManager.GetComponent<CoordinateCalculationManager>().Set_Block_Pos(); // 設置済みブロックの位置をセット
+            //Debug.Log("Set_Block_Pos() [CreateManager]");
 
-
-            Instantiate(blockPrefabArray[0], pos, rot, objectCanvas.transform); // オブジェクトを生成
+            Instantiate(blockPrefabArray[0], pos, rot, objectCanvas.transform); // DownObjectを生成
             objectDownObject = GameObject.Find("DownObject(Clone)");
 
 
             create_DownObject_Flag = true;
-            //Debug.Log(objectDownObject);
+            
 
 
             if (create_DownObject_Flag == true)
             {
+                //Debug.Log("create_ChildBlocks");
                 int number = UnityEngine.Random.Range(1, 6);
                 int number2 = UnityEngine.Random.Range(1, 6);
 
-                Instantiate(blockPrefabArray[number], pos, rot, objectDownObject.transform); // オブジェクトを生成
-                Instantiate(blockPrefabArray[number2], pos2, rot, objectDownObject.transform); // オブジェクトを生成
+                //Debug.Log("DownObject(Clone) : " + objectDownObject);
+
+
+                GameObject obj = Instantiate(blockPrefabArray[number], pos, rot, objectDownObject.transform); // ブロックをランダム生成
+                GameObject obj2 = Instantiate(blockPrefabArray[number2], pos2, rot, objectDownObject.transform);
+
+
+                if (obj.gameObject.transform.parent != objectDownObject)
+                {
+                    //Debug.Log("not_parent");
+                    //Debug.Log("objectDownObject.transform : " + objectDownObject.transform);
+                    obj.transform.SetParent(objectDownObject.transform);
+                }
+                if (obj2.gameObject.transform.parent != objectDownObject)
+                {
+                    //Debug.Log("not_parent");
+                    obj2.transform.SetParent(objectDownObject.transform);
+                }
+
+
+
                 set_Flag = true;
             }
 
             if (set_Flag == true)
             {
-                objectDownObject.GetComponent<ControlManager>().enabled = true;
+                //Debug.Log("ControlManager_Active");
+                controlManager.GetComponent<ControlManager>().enabled = true;
                 set_Flag = false;
-                
+
+                cpl_Create = true; // 作成完了フラグ
             }
+
+            create_DownObject_Flag = false;
         }
 
 

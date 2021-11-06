@@ -1,4 +1,4 @@
-ï»¿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,9 +9,11 @@ public class DownObjectDelete : MonoBehaviour
     private GameObject objectDownObject;
     private GameObject connectCheckManager;
     private GameObject blockManager;
+    private GameObject coordinateCalculationManager;
     private GameObject createManager;
     private GameObject[] ChildObject;
     private GameObject objectCanvas;
+
     private int childCount;
 
 
@@ -20,90 +22,118 @@ public class DownObjectDelete : MonoBehaviour
     {
         objectCanvas = GameObject.Find("Canvas");
         connectCheckManager = GameObject.Find("ConnectCheckManager");
+        coordinateCalculationManager = GameObject.Find("CoordinateCalculationManager");
+
     }
 
-    // Update is called once per frame
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    /////
+    /////        —‰º’†‚ÌƒuƒƒbƒN‚ªÚ’n‚µ‚½‚Ìˆ—B
+    /////        coordinateCalculationManager‚ÌBlock_Landing()‚©‚çŒÄ‚Ño‚·
+    /////        DownObject(Clone)‚ğ”jŠü‚µAqObject‚ğCanvas‚ÉˆÚ“®
+    /////        coordinateCalculationManager‚ğ—LŒø‚É‚µAˆÊ’uî•ñ‚ğÄ“ü—ÍŒãA˜AŒ‹ƒ`ƒFƒbƒNˆ—‚ğ—LŒø‚É‚·‚é
+    /////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     public void Delete()
     {
-        //DeleteTargetObj ã¨ã„ã†åå‰ã®ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å–å¾—
         objectDownObject = GameObject.Find("DownObject(Clone)");
         createManager = GameObject.Find("CreateManager");
         blockManager = GameObject.Find("BlockManager");
 
-        //Debug.Log("è¡çª");
+
+        //Debug.Log("Delete");
+        //Debug.Log("go_Delete : " + go_Delete);
 
 
-        // DownObjectã¨ã®è¡çªåˆ¤å®š
+        // DownObject‚Æ‚ÌÕ“Ë”»’è
+        // go_Delete‚ÍcoordinateCalculationManager‚ÌBlock_Landing()‚Åtrue‚É•ÏX
         if (go_Delete == true)
         {
-            //Debug.Log("DownObjectè¡çª");
-
-
+            go_Delete = false;
+            //Debug.Log("objectDownObject : " + objectDownObject);
             //GetChildren(objectDownObject.gameObject);
-
             //objectDownObject.gameObject.transform.parent = null;
             //objectDownObject.transform.DetachChildren();
 
 
-            ChildObject = new GameObject[objectDownObject.transform.childCount];
-            childCount = objectDownObject.transform.childCount;
+            ChildObject = new GameObject[objectDownObject.transform.childCount]; // —‰º’†ƒuƒƒbƒN‚ÌŠeƒuƒƒbƒN‚ÌGameObject‚ğ”z—ñ‚ÉŠi”[
+            childCount = objectDownObject.transform.childCount; // —‰º’†ƒuƒƒbƒN‚ÌƒuƒƒbƒN”
             //Debug.Log("ChildObject:" + ChildObject);
             //Debug.Log("childCount1:" + childCount);
 
             for (int i = childCount - 1; i > -1; i--)
             {
-                ChildObject[i] = objectDownObject.transform.GetChild(i).gameObject;
-                //Debug.Log(ChildObject[i].name);
-                ChildObject[i].transform.parent = objectCanvas.transform;
-
-                //Debug.Log(i);
+                if (i >= 0)
+                {
+                    //Debug.Log(i);
+                    ChildObject[i] = objectDownObject.transform.GetChild(i).gameObject; // —‰º’†ƒuƒƒbƒN‚ÌŠeƒuƒƒbƒN‚ÌGameObject‚ğ”z—ñ‚ÉŠi”[
+                    //Debug.Log(ChildObject[i].name);
+                    ChildObject[i].transform.parent = objectCanvas.transform;
+                }
 
                 if (i == 0)
                 {
-                    // æŒ‡å®šã—ãŸã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å‰Šé™¤
-                    Destroy(objectDownObject);
-                    go_Delete = false;
+                    //Debug.Log("Destroy" + i);
+                    //Destroy(objectDownObject); // DownObject(Clone)ƒIƒuƒWƒFƒNƒg‚ğíœ
+                    //Debug.Log("objectDownObject[DownObjectDelete] : " + objectDownObject);
 
-                    if (createManager.GetComponent<CreateManager>().create_DownObject_Flag == true)
-                    {
-
-
-                        // ã‚¿ã‚°ãŒåŒã˜ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å…¨ã¦å–å¾—ã™ã‚‹
-                        GameObject[] targetBox = GameObject.FindGameObjectsWithTag("Block");
-
-                        foreach (GameObject gameObj in targetBox)
-                        {
-                            gameObj.GetComponent<BlockContactManager>().enabled = true;
-                            gameObj.GetComponent<BlockManager>().block_pox_x = Mathf.RoundToInt(gameObj.transform.position.x * 10.0f) / 10.0f;
-                            gameObj.GetComponent<BlockManager>().block_pox_y = Mathf.RoundToInt(gameObj.transform.position.y * 10.0f) / 10.0f;
-                        }
-
-
-                        //string[] boxTagArray = { "Block", "Green", "Blue", "Orange", "Red", "Yellow" };
-
-                        //foreach (string boxTag in boxTagArray)
-                        //{
-
-                        //    // ã‚¿ã‚°ãŒåŒã˜ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å…¨ã¦å–å¾—ã™ã‚‹
-                        //    GameObject[] targetBox = GameObject.FindGameObjectsWithTag(boxTag);
-
-                        //    foreach (GameObject gameObj in targetBox)
-                        //    {
-                        //        gameObj.GetComponent<BlockContactManager>().enabled = true;
-                        //    }
-
-                        //}
-                    }
-
-
+                    //if (objectDownObject == null)
+                    //{
+                    //    Debug.Log("objectDownObject == null");
+                    //    if (createManager.GetComponent<CreateManager>().cpl_Create == false)
+                    //    {
+                    //        Debug.Log("Create_Blocks[DownObjectDelete]");
+                    //        //createManager.GetComponent<CreateManager>().go_Create = false;
+                    //        createManager.GetComponent<CreateManager>().Create_Blocks();
+                    //    }
+                    //}
+                    StartCoroutine("Go_Create");
 
                 }
-            }
+
+            } // for
+
+            // —‰ºƒuƒƒbƒN‚Ìˆ—I—¹Œã‚ÉAƒuƒƒbƒN‚Ì˜AŒ‹‚ğƒ`ƒFƒbƒN‚·‚é
             connectCheckManager.GetComponent<ConnectCheckManager>().go_Check = true;
-        }
+
+
+
+            coordinateCalculationManager.GetComponent<CoordinateCalculationManager>().landing = false;
+
+        } // if
     }
 
 
+    private IEnumerator Go_Create()
+    {
+        yield return StartCoroutine("DestroyObj"); // DownObject(Clone)ƒIƒuƒWƒFƒNƒg‚Ìíœ‚ğ‘Ò‚Â
+
+        //Debug.Log("Go_Create");
+
+        if (objectDownObject == null)
+        {
+            //Debug.Log("objectDownObject == null");
+            if (createManager.GetComponent<CreateManager>().cpl_Create == false)
+            {
+                //Debug.Log("Create_Blocks[DownObjectDelete]");
+                //createManager.GetComponent<CreateManager>().go_Create = false;
+                createManager.GetComponent<CreateManager>().Create_Blocks();
+            }
+        }
+
+    }
+
+    private IEnumerator DestroyObj()
+    {
+        //Debug.Log("DestroyObj");
+        Destroy(objectDownObject); // DownObject(Clone)ƒIƒuƒWƒFƒNƒg‚ğíœ
+        yield return new WaitForSeconds(0);
+
+    }
 
 
 }
